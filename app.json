@@ -43,6 +43,16 @@
       "eas": {
         "projectId": "5727f84b-b145-489e-a6a2-9781bb1e7dff"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.0"
+          }
+        }
+      ]
+    ]
   }
 }
