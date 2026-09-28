@@ -23,7 +23,7 @@
 
 - **Clock In/Clock Out**
   - Simple and intuitive interface for employees to clock in and out.
-  - Location verification to ensure employees are within the designated area (Edmonton Yard) when clocking in/out.
+  - Location capture for clock-in and clock-out records.
   - Optional note addition for each clock in/out action.
 
 - **Shift Tracking**
@@ -152,7 +152,7 @@ To get a local copy up and running, follow these steps:
 
 2. **Clock In**
    - Navigate to the home screen and tap on "Clock In".
-   - Optionally add a note and confirm your clock-in. Ensure you are within the Edmonton Yard for location verification.
+   - Optionally add a note and confirm your clock-in.
 
 3. **Clock Out**
    - When your shift is over, tap on "Clock Out".
