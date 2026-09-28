@@ -18,7 +18,7 @@
         "NSLocationWhenInUseUsageDescription": "This app uses your location to track your work shifts.",
         "ITSAppUsesNonExemptEncryption": false
       },
-      "deploymentTarget": "17.5"
+      "deploymentTarget": "15.0"
     },
     "android": {
       "icon": "./assets/icon.png",
