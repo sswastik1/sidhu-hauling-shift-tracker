@@ -13,6 +13,7 @@
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
+- [Privacy Policy](#privacy-policy)
 - [Contact](#contact)
 
 ## Screenshots
@@ -173,6 +174,10 @@ To get a local copy up and running, follow these steps:
 ## License
 
 Distributed under a custom License. See `LICENSE` for more information.
+
+## Privacy Policy
+
+Read the [Sidhu Hauling Ltd. ShiftTracker Privacy Policy](./PRIVACY_POLICY.md).
 
 ## Contact
 
