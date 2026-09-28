@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "Sidhu Hauling Ltd. ShiftTracker",
+    "slug": "sidhu-hauling-shift-tracker",
+    "version": "1.3.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.sidhuhauling.shifttracker",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app uses your location to track your work shifts.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "deploymentTarget": "17.5"
+    },
+    "android": {
+      "icon": "./assets/icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
+      "package": "com.sidhuhauling.shifttracker",
+      "userInterfaceStyle": "light"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5727f84b-b145-489e-a6a2-9781bb1e7dff"
+      }
+    }
+  }
+}
