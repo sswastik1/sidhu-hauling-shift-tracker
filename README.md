@@ -70,7 +70,7 @@
 
 ## Screenshots
 
-<p align="center"> <img src="./screenshots/login.png" alt="Login Screen" width="250"/> <img src="./screenshots/home.png" alt="Home Screen" width="250"/> <img src="./screenshots/clockin_confirmation.png" alt="Clock In Confirmation" width="250"/> <img src="./screenshots/clockout_confirmation.png" alt="Clock Out Confirmation" width="250"/> </p> <p align="center"> <img src="./screenshots/driver_list.png" alt="Driver List" width="250"/> <img src="./screenshots/driver_calendar.png" alt="Driver Calendar" width="250"/> <img src="./screenshots/date_summary.png" alt="Date Summary" width="250"/> <img src="./screenshots/map_view.png" alt="Map View" width="250"/> </p>
+<p align="center"> <img src="./screenshots/login.png" alt="Login Screen" width="250"/> <img src="./screenshots/home.png" alt="Home Screen" width="250"/> <img src="./screenshots/clockin_confirmation.png" alt="Clock In Confirmation" width="250"/> <img src="./screenshots/clocked_in.png" alt="Clocked In Home Screen" width="250"/> </p> <p align="center"> <img src="./screenshots/clockout_confirmation.png" alt="Clock Out Confirmation" width="250"/> <img src="./screenshots/driver_list.png" alt="Driver List" width="250"/> <img src="./screenshots/map_view.png" alt="Driver Locations Map" width="250"/> <img src="./screenshots/report_month_selection.png" alt="Monthly Report Selection" width="250"/> <img src="./screenshots/driver_calendar.png" alt="Driver Calendar" width="250"/> </p>
 
 ## Installation
 
