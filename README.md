@@ -170,6 +170,9 @@ To get a local copy up and running, follow these steps:
 6. **Location Tracking**
    - View live locations of drivers on the map to monitor their current status.
 
+7. **Account Deletion**
+   - Signed-in employees can permanently delete their account and profile from the Home screen by selecting **Delete Account** and confirming their current password.
+
 
 ## License
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert, ActivityIndicator, StyleSheet, TouchableOpacity, Image, SafeAreaView } from 'react-native';
+import { View, Text, Alert, ActivityIndicator, StyleSheet, TouchableOpacity, Image, SafeAreaView, Modal, TextInput } from 'react-native';
 import * as Location from 'expo-location';
 import { auth, firestore } from './firebase';
 import { addDoc, collection, serverTimestamp, query, where, orderBy, limit, getDocs, getDoc, doc, setDoc, deleteDoc } from 'firebase/firestore';
-import { signOut } from 'firebase/auth';
+import { EmailAuthProvider, reauthenticateWithCredential, signOut, deleteUser } from 'firebase/auth';
 import { MaterialIcons } from '@expo/vector-icons'; // Import icons
 
 // Function to send location to Firebase
@@ -28,6 +28,9 @@ const HomeScreen = ({ navigation }) => {
   const [status, setStatus] = useState('loading'); // 'loading', 'clockedIn', 'clockedOut'
   const [loading, setLoading] = useState(false);
   const [clockInTime, setClockInTime] = useState(null);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -188,6 +191,52 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    const user = auth.currentUser;
+    if (!user?.email) {
+      Alert.alert('Delete Account', 'No signed-in account was found.');
+      return;
+    }
+
+    if (!deletePassword) {
+      Alert.alert('Password required', 'Enter your current password to delete your account.');
+      return;
+    }
+
+    setDeleteLoading(true);
+    try {
+      const credential = EmailAuthProvider.credential(user.email, deletePassword);
+      await reauthenticateWithCredential(user, credential);
+      await deleteDoc(doc(firestore, 'users', user.uid));
+      await deleteDoc(doc(firestore, 'liveLocations', user.uid));
+      await deleteUser(user);
+      setDeleteModalVisible(false);
+      setDeletePassword('');
+      navigation.replace('Login');
+    } catch (error) {
+      console.error('Account deletion error:', error);
+      Alert.alert(
+        'Account deletion failed',
+        error?.code === 'auth/wrong-password'
+          ? 'The password is incorrect.'
+          : error?.message || 'Unable to delete your account. Please try again.'
+      );
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
+  const confirmDeleteAccount = () => {
+    Alert.alert(
+      'Delete account?',
+      'Your account and profile will be permanently deleted. Company shift records may be retained for business recordkeeping.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Continue', style: 'destructive', onPress: () => setDeleteModalVisible(true) },
+      ]
+    );
+  };
+
   const calculateHoursSinceClockIn = () => {
     if (!clockInTime) return 0;
     const now = new Date();
@@ -253,9 +302,36 @@ const HomeScreen = ({ navigation }) => {
             <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
               <Text style={styles.logoutButtonText}>Logout</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.deleteAccountButton} onPress={confirmDeleteAccount}>
+              <Text style={styles.deleteAccountButtonText}>Delete Account</Text>
+            </TouchableOpacity>
           </View>
         </View>
       )}
+      <Modal visible={deleteModalVisible} transparent animationType="fade" onRequestClose={() => setDeleteModalVisible(false)}>
+        <View style={styles.modalBackdrop}>
+          <View style={styles.deleteModal}>
+            <Text style={styles.deleteTitle}>Confirm account deletion</Text>
+            <Text style={styles.deleteDescription}>
+              Enter your current password to permanently delete your account and profile.
+            </Text>
+            <TextInput
+              value={deletePassword}
+              onChangeText={setDeletePassword}
+              placeholder="Current password"
+              secureTextEntry
+              autoCapitalize="none"
+              style={styles.deleteInput}
+            />
+            <TouchableOpacity style={styles.confirmDeleteButton} onPress={handleDeleteAccount} disabled={deleteLoading}>
+              {deleteLoading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Delete My Account</Text>}
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.cancelDeleteButton} onPress={() => setDeleteModalVisible(false)} disabled={deleteLoading}>
+              <Text style={styles.cancelDeleteText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -342,6 +418,59 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  deleteAccountButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  deleteAccountButtonText: {
+    color: '#C62828',
+    fontSize: 14,
+  },
+  modalBackdrop: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  deleteModal: {
+    width: '85%',
+    padding: 22,
+    borderRadius: 12,
+    backgroundColor: '#fff',
+  },
+  deleteTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  deleteDescription: {
+    fontSize: 15,
+    lineHeight: 21,
+    marginBottom: 16,
+  },
+  deleteInput: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 13,
+    marginBottom: 14,
+  },
+  confirmDeleteButton: {
+    padding: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+    backgroundColor: '#C62828',
+  },
+  cancelDeleteButton: {
+    padding: 14,
+    alignItems: 'center',
+  },
+  cancelDeleteText: {
+    color: '#0288D1',
+    fontWeight: 'bold',
   },
 });
 

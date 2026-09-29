@@ -38,7 +38,7 @@ We retain information for as long as it is needed for business, accounting, oper
 
 ## Your choices and requests
 
-You may manage device permissions through iOS Settings. Employees may request access to, correction of, or deletion of their account or associated information by contacting the app administrator.
+You may manage device permissions through iOS Settings. Signed-in employees can permanently delete their account and profile from the **Delete Account** action on the Home screen after confirming their current password. Company shift records may be retained for business recordkeeping; account identifiers are not used to provide access after account deletion. Employees may also request access to or correction of information by contacting the app administrator.
 
 ## Children's privacy
 
