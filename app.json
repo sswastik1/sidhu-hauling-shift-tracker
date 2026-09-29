@@ -14,7 +14,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.sidhuhauling.shifttracker",
-      "buildNumber": "3",
+      "buildNumber": "4",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app uses your location to track your work shifts.",
         "ITSAppUsesNonExemptEncryption": false
