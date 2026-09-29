@@ -94,10 +94,19 @@ const ClockOutConfirmation = ({ route, navigation }) => {
     if (!uri) return null;
     const imageRef = ref(storage, `images/${uuid.v4()}.jpg`);
 
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    await uploadBytes(imageRef, blob, { contentType: 'image/jpeg' });
-    return getDownloadURL(imageRef);
+    try {
+      const response = await fetch(uri);
+      if (!response.ok) {
+        throw new Error(`Unable to read selected image (${response.status}).`);
+      }
+
+      const blob = await response.blob();
+      await uploadBytes(imageRef, blob, { contentType: 'image/jpeg' });
+      return await getDownloadURL(imageRef);
+    } catch (error) {
+      console.error('Image upload failed:', error);
+      throw new Error(error?.message || 'Image upload failed. Please try again.');
+    }
   };
 
   const confirmClockOut = async () => {
@@ -119,7 +128,7 @@ const ClockOutConfirmation = ({ route, navigation }) => {
       navigation.goBack();
     } catch (error) {
       console.error('Error during clock out:', error);
-      Alert.alert('Error', 'Failed to clock out properly.');
+      Alert.alert('Clock-out failed', error?.message || 'Unable to save the clock-out.');
     }
   };
 
