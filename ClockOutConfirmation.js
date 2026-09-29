@@ -112,8 +112,17 @@ const ClockOutConfirmation = ({ route, navigation }) => {
   const confirmClockOut = async () => {
     console.log('Confirming clock out...');
     try {
+      const hasDraftEntry = companyName || ticketNumber || hours || image;
+      if (hasDraftEntry && (!companyName || !ticketNumber || !hours)) {
+        Alert.alert('Incomplete entry', 'Enter company name, ticket number, and hours before clocking out.');
+        return;
+      }
+
+      const entriesToSave = hasDraftEntry
+        ? [...entries, { companyName, ticketNumber, hours, image }]
+        : entries;
       const updatedEntries = await Promise.all(
-        entries.map(async (entry) => {
+        entriesToSave.map(async (entry) => {
           console.log('Processing entry:', entry);
           return {
             ...entry,
