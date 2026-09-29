@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'; 
-import { firestore } from './firebase'; 
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { firestore, storage } from './firebase';
 import { doc, deleteDoc } from 'firebase/firestore'; 
 import uuid from 'react-native-uuid';
 
@@ -92,24 +92,12 @@ const ClockOutConfirmation = ({ route, navigation }) => {
 
   const uploadImage = async (uri) => {
     if (!uri) return null;
-    const storage = getStorage();
     const imageRef = ref(storage, `images/${uuid.v4()}.jpg`);
 
-    try {
-      const response = await fetch(uri);
-      const blob = await response.blob();
-
-      console.log('uri:', uri);
-      console.log('blob:', blob);
-      console.log('imageRef:', imageRef);
-
-      await uploadBytes(imageRef, blob);
-      const downloadUrl = await getDownloadURL(imageRef);
-      return downloadUrl;
-    } catch (error) {
-      console.error('Error uploading image:', error.code, error.message);
-      return null;
-    }
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    await uploadBytes(imageRef, blob, { contentType: 'image/jpeg' });
+    return getDownloadURL(imageRef);
   };
 
   const confirmClockOut = async () => {
@@ -126,7 +114,7 @@ const ClockOutConfirmation = ({ route, navigation }) => {
       );
 
       console.log('Clock out confirmed with entries:', updatedEntries);
-      handleClockOut(note, fuelUsage, updatedEntries); 
+      await handleClockOut(note, fuelUsage, updatedEntries);
       resetState(); 
       navigation.goBack();
     } catch (error) {
