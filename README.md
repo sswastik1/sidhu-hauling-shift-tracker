@@ -14,6 +14,7 @@
 - [Contributing](#contributing)
 - [License](#license)
 - [Privacy Policy](#privacy-policy)
+- [Support](#support)
 - [Contact](#contact)
 
 ## Screenshots
@@ -181,6 +182,10 @@ Distributed under a custom License. See `LICENSE` for more information.
 ## Privacy Policy
 
 Read the [Sidhu Hauling Ltd. ShiftTracker Privacy Policy](./PRIVACY_POLICY.md).
+
+## Support
+
+For troubleshooting and contact information, see the [Sidhu Hauling Ltd. ShiftTracker Support page](./SUPPORT.md).
 
 ## Contact
 
