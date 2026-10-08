@@ -43,9 +43,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
+    "runtimeVersion": "1.3.0",
     "extra": {
       "eas": {
         "projectId": "5727f84b-b145-489e-a6a2-9781bb1e7dff"
